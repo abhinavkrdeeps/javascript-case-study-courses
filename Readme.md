@@ -7,6 +7,7 @@ Conecpts Used:
 3) EventListener/ DOM
 5) LocalStorage (Adding Items/ Removing Items/ Listing/ Editing Items in a Local Storage)
 6) Duplicacy Handled (Not able to add duplicate Elements)
+7) Adding Dynamic html elements using javascript based on conditions
 
 Run
 Open index.html in browser.
