@@ -26,7 +26,7 @@ window.addEventListener("DOMContentLoaded", setupItems);
 function isDuplicateItem(id,name){
 
   let items = getLocalStorage();
-  console.log("name "+name);
+  //console.log("name "+name);
   isDuplicate = false;
   items.forEach(function(item){
     if(item.value===name){
@@ -42,8 +42,8 @@ function addItem(e) {
   e.preventDefault();
   let value = course.value;
   const id = new Date().getTime().toString();
-  console.log(" add Item Value: "+value);
-  console.log(isDuplicateItem(id,value));
+ // console.log(" add Item Value: "+value);
+  //console.log(isDuplicateItem(id,value));
   if(isDuplicateItem(id,value)){
     displayAlert("Duplicacy Detected","danger");
     return;
