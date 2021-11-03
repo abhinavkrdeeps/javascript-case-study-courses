@@ -1,11 +1,12 @@
 // ****** select items **********
 
-const form = document.querySelector(".grocery-form");
+console.log("hello WOrld")
+const form = document.querySelector(".course-form");
 const alert = document.querySelector(".alert");
-const grocery = document.getElementById("grocery");
+const course = document.getElementById("course");
 const submitBtn = document.querySelector(".submit-btn");
-const container = document.querySelector(".grocery-container");
-const list = document.querySelector(".grocery-list");
+const container = document.querySelector(".course-container");
+const list = document.querySelector(".course-list");
 const clearBtn = document.querySelector(".clear-btn");
 // edit option
 let editElement;
@@ -22,18 +23,37 @@ window.addEventListener("DOMContentLoaded", setupItems);
 
 // ****** functions **********
 
+function isDuplicateItem(id,name){
+
+  let items = getLocalStorage();
+  console.log("name "+name);
+  isDuplicate = false;
+  items.forEach(function(item){
+    if(item.value===name){
+      console.log(item.value);
+      isDuplicate= true;
+    }
+  });
+  return isDuplicate;
+}
+
 // add item
 function addItem(e) {
   e.preventDefault();
-  const value = grocery.value;
+  let value = course.value;
   const id = new Date().getTime().toString();
-
+  console.log(" add Item Value: "+value);
+  console.log(isDuplicateItem(id,value));
+  if(isDuplicateItem(id,value)){
+    displayAlert("Duplicacy Detected","danger");
+    return;
+  }
   if (value !== "" && !editFlag) {
     const element = document.createElement("article");
     let attr = document.createAttribute("data-id");
     attr.value = id;
     element.setAttributeNode(attr);
-    element.classList.add("grocery-item");
+    element.classList.add("course-item");
     element.innerHTML = `<p class="title">${value}</p>
             <div class="btn-container">
               <!-- edit btn -->
@@ -86,7 +106,7 @@ function displayAlert(text, action) {
 
 // clear items
 function clearItems() {
-  const items = document.querySelectorAll(".grocery-item");
+  const items = document.querySelectorAll(".course-item");
   if (items.length > 0) {
     items.forEach(function (item) {
       list.removeChild(item);
@@ -121,7 +141,7 @@ function editItem(e) {
   // set edit item
   editElement = e.currentTarget.parentElement.previousElementSibling;
   // set form value
-  grocery.value = editElement.innerHTML;
+  course.value = editElement.innerHTML;
   editFlag = true;
   editID = element.dataset.id;
   //
@@ -129,7 +149,7 @@ function editItem(e) {
 }
 // set backt to defaults
 function setBackToDefault() {
-  grocery.value = "";
+  course.value = "";
   editFlag = false;
   editID = "";
   submitBtn.textContent = "submit";
@@ -139,10 +159,15 @@ function setBackToDefault() {
 
 // add to local storage
 function addToLocalStorage(id, value) {
-  const grocery = { id, value };
+  const course = { id, value };
+
+  if(!isDuplicateItem(id,value)){
   let items = getLocalStorage();
-  items.push(grocery);
+  items.push(course);
   localStorage.setItem("list", JSON.stringify(items));
+  }else{
+    displayAlert("Items Already Added.Duplicacy Detected","danger");
+  }
 }
 
 function getLocalStorage() {
@@ -197,7 +222,7 @@ function createListItem(id, value) {
   let attr = document.createAttribute("data-id");
   attr.value = id;
   element.setAttributeNode(attr);
-  element.classList.add("grocery-item");
+  element.classList.add("course-item");
   element.innerHTML = `<p class="title">${value}</p>
             <div class="btn-container">
               <!-- edit btn -->
